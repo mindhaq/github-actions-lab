@@ -1,0 +1,22 @@
+name: Pull request closed
+on:
+  pull_request_target:
+    branches: [main]
+    types: [closed]
+
+jobs:
+  prepare_test_environment:
+    name: Delete test environment
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: jwalton/gh-find-current-pr@master
+        id: findPr
+
+      - name: Run cleanup script
+        if: success() && steps.findPr.outputs.number
+        run: echo "Deleting test environment for PR ${PR}"
+        env:
+          PR: ${{ steps.findPr.outputs.pr }}
+

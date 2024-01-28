@@ -1,0 +1,23 @@
+name: Pull request updated
+on:
+  push:
+  pull_request_target:
+    branches: [main]
+    types: [synchronize]
+
+jobs:
+  prepare_test_environment:
+    name: Update test environment
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: jwalton/gh-find-current-pr@master
+        id: findPr
+
+      - name: Run update script
+        if: success() && steps.findPr.outputs.number
+        run: echo "Updating test environment for PR ${PR}"
+        env:
+          PR: ${{ steps.findPr.outputs.pr }}
+

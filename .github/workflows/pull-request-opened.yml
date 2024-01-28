@@ -1,0 +1,22 @@
+name: Pull request opened
+on:
+  pull_request_target:
+    branches: [main]
+    types: [opened, reopened]
+
+jobs:
+  prepare_test_environment:
+    name: Prepare test environment
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: jwalton/gh-find-current-pr@master
+        id: findPr
+
+      - name: Run preparation script
+        if: success() && steps.findPr.outputs.number
+        run: echo "Preparing test environment for PR ${PR}"
+        env:
+          PR: ${{ steps.findPr.outputs.pr }}
+
