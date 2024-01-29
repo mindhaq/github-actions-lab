@@ -24,7 +24,7 @@ jobs:
 
       - name: Trigger prepare test environment
         if: success() && steps.findPr.outputs.number
-        uses: peter-evans/repository-dispatch@v1
+        uses: peter-evans/repository-dispatch@v3
         with:
           event-type: trigger-workflow-update-test-environment
           
