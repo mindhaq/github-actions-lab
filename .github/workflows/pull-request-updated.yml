@@ -3,6 +3,8 @@ on:
   pull_request_target:
     branches: [main]
     types: [synchronize]
+  repository_dispatch:
+    types: [trigger-workflow-update-test-environment]
 
 jobs:
   prepare_test_environment:
