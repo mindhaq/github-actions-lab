@@ -24,5 +24,6 @@ jobs:
         if: success() && steps.findPr.outputs.number
         uses: peter-evans/repository-dispatch@v1
         with:
+          token: ${{ secrets.GITHUB_TOKEN}}
           event-type: trigger-workflow-update-test-environment
           
