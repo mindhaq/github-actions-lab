@@ -8,6 +8,8 @@ jobs:
   prepare_test_environment:
     name: Prepare test environment
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -22,7 +24,7 @@ jobs:
 
       - name: Trigger prepare test environment
         if: success() && steps.findPr.outputs.number
-        uses: peter-evans/repository-dispatch@v1
+        uses: peter-evans/repository-dispatch@v3
         with:
           event-type: trigger-workflow-update-test-environment
           
