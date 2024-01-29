@@ -8,6 +8,8 @@ jobs:
   prepare_test_environment:
     name: Prepare test environment
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -24,6 +26,5 @@ jobs:
         if: success() && steps.findPr.outputs.number
         uses: peter-evans/repository-dispatch@v1
         with:
-          token: ${{ secrets.BUILD_TOKEN}}
           event-type: trigger-workflow-update-test-environment
           
